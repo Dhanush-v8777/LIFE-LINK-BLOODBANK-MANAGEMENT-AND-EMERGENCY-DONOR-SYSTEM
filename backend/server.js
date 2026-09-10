@@ -72,21 +72,21 @@ app.use(morgan('dev'));
 // Static files (for PDF/Excel generated reports if we save them locally, though we pipe streams directly)
 app.use('/uploads', express.static('uploads'));
 
-// Routes
-app.use('/api/auth', authRoutes);
-app.use('/api/donors', donorRoutes);
-app.use('/api/patients', patientRoutes);
-app.use('/api/hospitals', hospitalRoutes);
-app.use('/api/bloodbanks', bloodBankRoutes);
-app.use('/api/requests', requestRoutes);
-app.use('/api/reports', reportRoutes);
-app.use('/api/admin', adminRoutes);
-app.use('/api/bbr', bloodBankRequestRoutes);
-app.use('/api/nearby', nearbySearchRoutes);
-app.use('/api/notifications', notificationRoutes);
+// Routes (supports both /api/route and /route)
+app.use(['/api/auth', '/auth'], authRoutes);
+app.use(['/api/donors', '/donors'], donorRoutes);
+app.use(['/api/patients', '/patients'], patientRoutes);
+app.use(['/api/hospitals', '/hospitals'], hospitalRoutes);
+app.use(['/api/bloodbanks', '/bloodbanks'], bloodBankRoutes);
+app.use(['/api/requests', '/requests'], requestRoutes);
+app.use(['/api/reports', '/reports'], reportRoutes);
+app.use(['/api/admin', '/admin'], adminRoutes);
+app.use(['/api/bbr', '/bbr'], bloodBankRequestRoutes);
+app.use(['/api/nearby', '/nearby'], nearbySearchRoutes);
+app.use(['/api/notifications', '/notifications'], notificationRoutes);
 
 // Health Check Endpoint
-app.get('/api/health', (req, res) => {
+app.get(['/api/health', '/health'], (req, res) => {
   res.status(200).json({ status: 'OK', message: 'LifeLink Services are online' });
 });
 
