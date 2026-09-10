@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import api from '../../utils/api';
+import api, { API_BASE_URL } from '../../utils/api';
 import { useAuth } from '../../context/AuthContext';
 import {
   Heart, CheckCircle, ShieldCheck,
@@ -371,7 +371,7 @@ export default function DonorDashboard({ activeSubTab }) {
                             <button
                               onClick={() => {
                                 const token = localStorage.getItem('token');
-                                window.open(`http://localhost:5000/api/donors/certificates/download/${d.certificate_id}?token=${token}`, '_blank');
+                                window.open(`${API_BASE_URL}/donors/certificates/download/${d.certificate_id}?token=${token}`, '_blank');
                               }}
                               className="px-3 py-1.5 bg-slate-100 hover:bg-brand-50 text-slate-600 hover:text-brand-600 rounded text-[10px] font-bold transition flex items-center gap-1.5"
                             >
@@ -447,7 +447,7 @@ export default function DonorDashboard({ activeSubTab }) {
                     <button
                       onClick={() => {
                         const token = localStorage.getItem('token');
-                        window.open(`http://localhost:5000/api/donors/certificates/${cert.id}/pdf?token=${token}`, '_blank');
+                        window.open(`${API_BASE_URL}/donors/certificates/${cert.id}/pdf?token=${token}`, '_blank');
                       }}
                       className="flex-1 flex items-center justify-center space-x-1.5 px-3 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-200 text-xs font-bold rounded-lg transition"
                     >
@@ -457,7 +457,7 @@ export default function DonorDashboard({ activeSubTab }) {
                     <button
                       onClick={() => {
                         const token = localStorage.getItem('token');
-                        window.open(`http://localhost:5000/api/donors/certificates/${cert.id}/pdf?token=${token}&download=true`, '_blank');
+                        window.open(`${API_BASE_URL}/donors/certificates/${cert.id}/pdf?token=${token}&download=true`, '_blank');
                       }}
                       className="flex-1 flex items-center justify-center space-x-1.5 px-3 py-2 bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold rounded-lg transition"
                     >

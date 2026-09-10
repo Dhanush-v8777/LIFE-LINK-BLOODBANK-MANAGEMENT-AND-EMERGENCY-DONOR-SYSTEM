@@ -1,12 +1,13 @@
 import { FileSpreadsheet, Download, FileText, CheckCircle2 } from 'lucide-react';
+import { API_BASE_URL } from '../../utils/api';
 
 export default function ReportsView() {
   const handleReportDownload = (reportType, format) => {
     const token = localStorage.getItem('token');
     if (format === 'excel') {
-      window.open(`http://localhost:5000/api/reports/excel/${reportType}?token=${token}`, '_blank');
+      window.open(`${API_BASE_URL}/reports/excel/${reportType}?token=${token}`, '_blank');
     } else {
-      window.open(`http://localhost:5000/api/reports/pdf?type=${reportType}&token=${token}`, '_blank');
+      window.open(`${API_BASE_URL}/reports/pdf?type=${reportType}&token=${token}`, '_blank');
     }
   };
 

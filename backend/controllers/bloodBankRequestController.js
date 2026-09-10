@@ -2,6 +2,7 @@ const db = require('../config/db');
 const { logAudit } = require('../middleware/auditLogger');
 const { sendEmail } = require('../config/mail');
 const socket = require('../utils/socket');
+const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5173';
 
 // ── Email template helpers ──────────────────────────────────────────────────
 
@@ -33,7 +34,7 @@ function newRequestEmailToBank(bankName, patientName, bloodGroup, unitsRequired,
       </div>
       <p>Please log in to your Blood Bank Dashboard to <strong>Accept</strong> or <strong>Reject</strong> this request.</p>
       <div style="text-align:center">
-        <a href="http://localhost:5173/staff/blood-requests" class="btn">Review Request in Dashboard</a>
+        <a href="${FRONTEND_URL}/staff/blood-requests" class="btn">Review Request in Dashboard</a>
       </div>
       <p style="color:#64748b;font-size:13px;">This request will remain <strong>Pending</strong> until you take action.</p>
     </div>
@@ -73,7 +74,7 @@ function statusUpdateEmailToPatient(patientName, bloodGroup, unitsRequired, stat
         <p style="margin:5px 0"><strong>Status:</strong> <span style="color:${c.text};font-weight:700">${status}</span></p>
       </div>
       <div style="text-align:center">
-        <a href="http://localhost:5173/patient/dashboard" class="btn">View My Requests</a>
+        <a href="${FRONTEND_URL}/patient/dashboard" class="btn">View My Requests</a>
       </div>
     </div>
     <div class="f"><p>Automated message from LifeLink. Do not reply directly.</p><p>&copy; 2026 LifeLink Systems.</p></div>

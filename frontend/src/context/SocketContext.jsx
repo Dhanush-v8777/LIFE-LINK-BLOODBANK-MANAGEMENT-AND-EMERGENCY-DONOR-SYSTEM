@@ -2,13 +2,13 @@
 import { createContext, useContext, useEffect, useState, useCallback } from 'react';
 import { io } from 'socket.io-client';
 import { useAuth } from './AuthContext';
-import api from '../utils/api';
+import api, { BACKEND_URL } from '../utils/api';
 
 const SocketContext = createContext();
 
 export const SocketProvider = ({ children }) => {
   const { user } = useAuth();
-  const [socket] = useState(() => io('http://localhost:5000', {
+  const [socket] = useState(() => io(BACKEND_URL, {
     transports: ['websocket', 'polling']
   }));
   const [notifications, setNotifications] = useState([]);

@@ -22,12 +22,46 @@ const notificationRoutes = require('./routes/notificationRoutes');
 const app = express();
 const server = http.createServer(app);
 
+// Allowed Origins for CORS
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://localhost:3000',
+  'http://127.0.0.1:5173',
+  'http://127.0.0.1:3000'
+];
+
+if (process.env.FRONTEND_URL) {
+  const envOrigins = process.env.FRONTEND_URL.split(',').map(o => o.trim()).filter(Boolean);
+  allowedOrigins.push(...envOrigins);
+}
+
+const corsOriginChecker = (origin, callback) => {
+  // Allow requests with no origin (e.g. mobile apps, curl, server-to-server)
+  if (!origin) return callback(null, true);
+
+  if (allowedOrigins.includes(origin)) {
+    return callback(null, true);
+  }
+
+  // Allow all Vercel deployment preview / production subdomains (*.vercel.app)
+  if (/^https:\/\/[a-zA-Z0-9_.-]+\.vercel\.app$/.test(origin)) {
+    return callback(null, true);
+  }
+
+  // In non-production environments, allow any origin
+  if (process.env.NODE_ENV !== 'production') {
+    return callback(null, true);
+  }
+
+  return callback(new Error(`CORS blocked request from origin: ${origin}`));
+};
+
 // Initialize Socket.io
-socketUtil.init(server);
+socketUtil.init(server, corsOriginChecker);
 
 // Middleware
 app.use(cors({
-  origin: '*',
+  origin: corsOriginChecker,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));

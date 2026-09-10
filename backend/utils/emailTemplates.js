@@ -1,6 +1,7 @@
 /**
  * HTML Email templates for LifeLink
  */
+const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5173';
 
 const baseTemplate = (title, content) => `
 <!DOCTYPE html>
@@ -136,7 +137,7 @@ module.exports = {
       </div>
       <p>Please log in to your dashboard to ACCEPT or DECLINE this request immediately. Your contribution could save a life today.</p>
       <div style="text-align: center;">
-        <a href="http://localhost:5173/dashboard" class="btn">View Emergency Request</a>
+        <a href="${FRONTEND_URL}/dashboard" class="btn">View Emergency Request</a>
       </div>
     `);
   },
@@ -147,7 +148,7 @@ module.exports = {
       <p>It has been over 3 months since your last blood donation on ${lastDonationDate}. You are now eligible to donate blood again!</p>
       <p>Patients and hospitals depend on regular donors like you to maintain a healthy blood supply. Please schedule your next donation today.</p>
       <div style="text-align: center;">
-        <a href="http://localhost:5173/dashboard" class="btn">Schedule Donation Now</a>
+        <a href="${FRONTEND_URL}/dashboard" class="btn">Schedule Donation Now</a>
       </div>
       <p>Thank you for being a lifesaver!</p>
     `);
@@ -194,7 +195,7 @@ module.exports = {
       </div>
       <p>Please schedule collection drives or coordinate with regional blood banks to replenish inventory levels immediately.</p>
       <div style="text-align: center;">
-        <a href="http://localhost:5173/dashboard" class="btn">Manage Inventory</a>
+        <a href="${FRONTEND_URL}/dashboard" class="btn">Manage Inventory</a>
       </div>
     `);
   },
@@ -206,7 +207,7 @@ module.exports = {
       <p>This is to notify you that <strong>${unitsCount} blood unit(s)</strong> in your inventory are expiring within the next 48 hours.</p>
       <p>Please review your inventory records and ensure these units are marked for testing, distributed, or properly disposed of in compliance with guidelines.</p>
       <div style="text-align: center;">
-        <a href="http://localhost:5173/dashboard" class="btn">View Expiring Inventory</a>
+        <a href="${FRONTEND_URL}/dashboard" class="btn">View Expiring Inventory</a>
       </div>
     `);
   },
@@ -223,7 +224,7 @@ module.exports = {
       <p>Please log in to your LifeLink account to view the request and respond.</p>
       <p>Your contribution can help save a life.</p>
       <div style="text-align: center;">
-        <a href="http://localhost:5173/donor/blood-requests" class="btn">View Request</a>
+        <a href="${FRONTEND_URL}/donor/blood-requests" class="btn">View Request</a>
       </div>
       <p style="margin-top: 20px;">Thank you,<br><strong>LifeLink Emergency Blood Management System</strong></p>
     `);
@@ -236,7 +237,7 @@ module.exports = {
       <p>Your 56-day donation cooldown period has ended. You are now <strong>eligible to donate blood again</strong>!</p>
       <p>Patients and hospitals depend on regular donors like you to maintain a healthy blood supply. If you're available, please update your status and consider responding to any pending requests.</p>
       <div style="text-align: center;">
-        <a href="http://localhost:5173/donor/dashboard" class="btn">Go to My Dashboard</a>
+        <a href="${FRONTEND_URL}/donor/dashboard" class="btn">Go to My Dashboard</a>
       </div>
       <p>Thank you for being a lifesaver!</p>
     `);
