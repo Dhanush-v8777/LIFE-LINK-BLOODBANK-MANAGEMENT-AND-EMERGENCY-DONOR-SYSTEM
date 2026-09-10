@@ -9,7 +9,10 @@ const transporter = nodemailer.createTransport({
   auth: {
     user: process.env.SMTP_USER,
     pass: process.env.SMTP_PASSWORD
-  }
+  },
+  connectionTimeout: 4000, // 4 seconds
+  greetingTimeout: 4000,
+  socketTimeout: 5000
 });
 
 // Verify connection configuration on startup
@@ -26,10 +29,15 @@ transporter.verify(function (error, success) {
 });
 
 /**
- * Send email with built-in retry mechanism (up to 3 attempts).
+ * Send email with built-in retry mechanism (up to 2 attempts).
  * Throws on failure so callers can inform the user that email was not delivered.
  */
 async function sendEmail({ to, subject, html, text }) {
+  if (!process.env.SMTP_USER || !process.env.SMTP_PASSWORD) {
+    console.warn('[SMTP] Skipping email delivery: SMTP credentials not set.');
+    return { skipped: true };
+  }
+
   const mailOptions = {
     from: `"${process.env.SMTP_FROM_NAME || 'LifeLink Emergency System'}" <${process.env.SMTP_FROM_EMAIL || process.env.SMTP_USER || 'noreply@lifelink.com'}>`,
     to,
@@ -38,7 +46,7 @@ async function sendEmail({ to, subject, html, text }) {
     html: html || ''
   };
 
-  const maxRetries = 3;
+  const maxRetries = 2;
   let attempt = 0;
 
   while (attempt < maxRetries) {
